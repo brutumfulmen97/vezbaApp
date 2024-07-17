@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Button,
   Image,
@@ -13,10 +13,13 @@ import {
   Modal,
   Pressable,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   useColorScheme,
   View,
+  ActivityIndicator,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 const pizzaImg = require('./assets/pizza.png');
@@ -26,18 +29,46 @@ const MyIcon = () => <Icon name="rocket" size={30} color="#900" />;
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   const [isVisible, setIsVisible] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? '#000' : '#fff',
   };
 
-  return (
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => {
+      clearTimeout(t);
+    };
+  }, []);
+
+  return isLoading ? (
+    <View style={{...styles.container, backgroundColor: 'lightblue'}}>
+      <ActivityIndicator size="large" color="slateblue" />
+    </View>
+  ) : (
     <View
       style={{
         ...styles.container,
         backgroundColor: backgroundStyle.backgroundColor,
       }}>
+      <StatusBar
+        backgroundColor="lightpink"
+        barStyle="dark-content"
+        hidden={isHidden}
+      />
       <ScrollView
+        onScroll={event => {
+          if (event.nativeEvent.contentOffset.y > 100) {
+            setIsHidden(true);
+          } else {
+            setIsHidden(false);
+          }
+        }}
         style={{
           flex: 1,
         }}
@@ -47,6 +78,32 @@ function App(): React.JSX.Element {
           alignItems: 'center',
         }}
         showsVerticalScrollIndicator={true}>
+        <View style={{marginBottom: 20}}>
+          <Button
+            title="Alert"
+            onPress={() =>
+              Alert.alert(
+                'Hello',
+                'World',
+                [
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'destructive',
+                  },
+                  {
+                    text: 'Ok',
+                    onPress: () => console.log('Ok Pressed'),
+                  },
+                ],
+                {
+                  cancelable: true,
+                  onDismiss: () => console.log('Dismissed'),
+                },
+              )
+            }
+          />
+        </View>
         <ImageBackground source={pizzaImg} style={styles.backgroundImage}>
           <Text
             style={{
