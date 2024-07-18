@@ -1,11 +1,53 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView, Platform} from 'react-native';
+import {StyleSheet, SafeAreaView, Platform, FlatList} from 'react-native';
 import PokemonCard from './PokemonCard';
 
 const PokeApp = () => {
+  const charmanderData = {
+    name: 'Charmander',
+    image: require('../assets/charmander.png'),
+    type: 'Fire',
+    hp: 39,
+    moves: ['Scratch', 'Ember', 'Growl', 'Leer'],
+    weaknesses: ['Water', 'Rock'],
+  };
+
+  const squirtleData = {
+    name: 'Squirtle',
+    image: require('../assets/squirtle.png'),
+    type: 'Water',
+    hp: 44,
+    moves: ['Tackle', 'Water Gun', 'Tail Whip', 'Withdraw'],
+    weaknesses: ['Electric', 'Grass'],
+  };
+
+  const bulbasaurData = {
+    name: 'Bulbasaur',
+    image: require('../assets/bulbasaur.png'),
+    type: 'Grass',
+    hp: 45,
+    moves: ['Tackle', 'Vine Whip', 'Growl', 'Leech Seed'],
+    weaknesses: ['Fire', 'Ice', 'Flying', 'Psychic'],
+  };
+
+  const pikachuData = {
+    name: 'Pikachu',
+    image: require('../assets/pikachu.png'),
+    type: 'Electric',
+    hp: 35,
+    moves: ['Quick Attack', 'Thunderbolt', 'Tail Whip', 'Growl'],
+    weaknesses: ['Ground'],
+  };
+
+  const pokemons = [charmanderData, squirtleData, bulbasaurData, pikachuData];
+
   return (
     <SafeAreaView style={styles.container}>
-      <PokemonCard />
+      <FlatList
+        data={pokemons}
+        renderItem={({item}) => <PokemonCard {...item} />}
+        keyExtractor={item => item.name}
+      />
     </SafeAreaView>
   );
 };
