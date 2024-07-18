@@ -75,6 +75,10 @@ function Bzvz({navigation}: {navigation: any}): React.JSX.Element {
         showsVerticalScrollIndicator={true}>
         <Button title="Safe" onPress={() => navigation.navigate('Safe')} />
         <Button
+          title="PokeApp"
+          onPress={() => navigation.navigate('PokeApp')}
+        />
+        <Button
           title="Layouts"
           onPress={() => navigation.navigate('Layouts')}
         />
