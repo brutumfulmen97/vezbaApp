@@ -3,6 +3,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Bzvz from './components/Bzvz';
 import Layouts from './components/Layouts';
+import Dynamic from './components/Dynamic';
+import Safe from './components/Safe';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,6 +14,8 @@ const App = () => {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={Bzvz} />
         <Stack.Screen name="Layouts" component={Layouts} />
+        <Stack.Screen name="Dynamic" component={Dynamic} />
+        <Stack.Screen name="Safe" component={Safe} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -73,9 +73,14 @@ function Bzvz({navigation}: {navigation: any}): React.JSX.Element {
           alignItems: 'center',
         }}
         showsVerticalScrollIndicator={true}>
+        <Button title="Safe" onPress={() => navigation.navigate('Safe')} />
         <Button
           title="Layouts"
           onPress={() => navigation.navigate('Layouts')}
+        />
+        <Button
+          title="Dynamic"
+          onPress={() => navigation.navigate('Dynamic')}
         />
         <StylesComponent />
         <Greet name={'Vlatko'} />
