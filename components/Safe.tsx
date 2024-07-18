@@ -1,5 +1,13 @@
 import React from 'react';
-import {View, Text, StyleSheet, SafeAreaView, Platform} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  Platform,
+  Alert,
+} from 'react-native';
+import CustomButton from './CustomButton/CustomButton';
 
 const Safe = () => {
   return (
@@ -7,6 +15,10 @@ const Safe = () => {
       <View style={styles.container}>
         <View style={styles.box}>
           <Text style={styles.text}>Safe</Text>
+          <CustomButton
+            title="Press me"
+            onPress={() => Alert.alert('Hello', 'sta ima?')}
+          />
         </View>
       </View>
     </SafeAreaView>
