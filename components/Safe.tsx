@@ -8,6 +8,7 @@ import {
   Alert,
 } from 'react-native';
 import CustomButton from './CustomButton/CustomButton';
+import List from './List';
 
 const Safe = () => {
   return (
@@ -20,6 +21,7 @@ const Safe = () => {
             onPress={() => Alert.alert('Hello', 'sta ima?')}
           />
         </View>
+        <List />
       </View>
     </SafeAreaView>
   );
