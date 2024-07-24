@@ -1,13 +1,15 @@
 import React from 'react';
 import {
-  ScrollView,
+  // ScrollView,
   View,
   Text,
   StyleSheet,
   StatusBar,
   FlatList,
+  SectionList,
 } from 'react-native';
 import data from '../api/data.json';
+import groupedData from '../api/grouped-data.json';
 
 const List = () => {
   return (
@@ -21,14 +23,56 @@ const List = () => {
             </View>
           );
         })} */}
+      <SectionList
+        sections={groupedData}
+        style={{
+          borderColor: 'black',
+          borderWidth: 2,
+          backgroundColor: 'orange',
+          padding: 20,
+          marginBottom: 30,
+        }}
+        SectionSeparatorComponent={() => (
+          <View style={{height: 10, width: '100%', backgroundColor: 'red'}} />
+        )}
+        renderItem={({item}) => (
+          <View
+            style={{
+              padding: 20,
+              margin: 10,
+              backgroundColor: 'lightblue',
+              borderColor: 'black',
+              borderWidth: 2,
+              borderRadius: 10,
+              shadowColor: 'black',
+              shadowOffset: {width: 0, height: 2},
+              shadowOpacity: 0.26,
+              shadowRadius: 10,
+              elevation: 5,
+            }}>
+            <Text style={styles.text}>{item}</Text>
+          </View>
+        )}
+        renderSectionHeader={({section}) => (
+          <Text style={[styles.text, {textAlign: 'left'}]}>{section.type}</Text>
+        )}
+      />
       <FlatList
         style={{
           borderColor: 'black',
           borderWidth: 2,
           backgroundColor: 'orange',
         }}
+        ItemSeparatorComponent={() => <View style={{height: 10, width: 50}} />}
+        ListEmptyComponent={() => <Text>Empty</Text>}
+        ListHeaderComponent={() => (
+          <Text style={styles.headerText}>Header</Text>
+        )}
+        ListFooterComponent={() => (
+          <Text style={styles.footerText}>Footer</Text>
+        )}
         data={data}
-        horizontal={true}
+        horizontal={false}
         renderItem={({item}) => (
           <View
             style={{
@@ -70,6 +114,18 @@ const styles = StyleSheet.create({
     fontSize: 30,
     textAlign: 'center',
     fontWeight: 'bold',
+  },
+  headerText: {
+    fontSize: 30,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    backgroundColor: 'lightgreen',
+  },
+  footerText: {
+    fontSize: 30,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    backgroundColor: 'lightgreen',
   },
 });
 
