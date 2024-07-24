@@ -8,6 +8,7 @@ import Safe from './components/Safe';
 import PokeApp from './components/PokeApp';
 import Form from './components/Form';
 import Login from './components/Login';
+import Networking from './components/Networking';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ const App = () => {
         <Stack.Screen name="PokeApp" component={PokeApp} />
         <Stack.Screen name="Form" component={Form} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Networking" component={Networking} />
       </Stack.Navigator>
     </NavigationContainer>
   );
