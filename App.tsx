@@ -6,6 +6,7 @@ import Layouts from './components/Layouts';
 import Dynamic from './components/Dynamic';
 import Safe from './components/Safe';
 import PokeApp from './components/PokeApp';
+import Form from './components/Form';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,7 @@ const App = () => {
         <Stack.Screen name="Dynamic" component={Dynamic} />
         <Stack.Screen name="Safe" component={Safe} />
         <Stack.Screen name="PokeApp" component={PokeApp} />
+        <Stack.Screen name="Form" component={Form} />
       </Stack.Navigator>
     </NavigationContainer>
   );
