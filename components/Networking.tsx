@@ -9,8 +9,10 @@ import {
   Pressable,
   TextInput,
   Alert,
+  StatusBar,
 } from 'react-native';
 import {LOCAL_IP} from '@env';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 type TPost = {
   title: string;
@@ -79,10 +81,17 @@ const Networking = () => {
   };
 
   useEffect(() => {
+    const wait = async (ms: number) => {
+      return new Promise(resolve => {
+        setTimeout(resolve, ms);
+      });
+    };
+
     const fetchPosts = async () => {
       try {
         const response = await fetch(`http://${localIp}:3000/api/data`);
         const data = await response.json();
+        await wait(500);
         setData(data);
       } catch (error) {
         console.log(error);
@@ -95,7 +104,9 @@ const Networking = () => {
   }, [localIp]);
 
   return isLoading ? (
-    <ActivityIndicator />
+    <SafeAreaView style={styles.loadingContainer}>
+      <ActivityIndicator size="large" color="#f2f2f2" />
+    </SafeAreaView>
   ) : (
     <View style={styles.container}>
       <Text>Networking</Text>
@@ -230,6 +241,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000',
+    paddingTop: StatusBar.currentHeight || 0,
   },
   post: {
     flex: 1,
