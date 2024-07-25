@@ -28,6 +28,7 @@ type TFormData = {
 const Networking = () => {
   const [data, setData] = useState<TPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState<TFormData>({
     title: '',
@@ -80,13 +81,27 @@ const Networking = () => {
     }
   };
 
-  useEffect(() => {
-    const wait = async (ms: number) => {
-      return new Promise(resolve => {
-        setTimeout(resolve, ms);
-      });
-    };
+  const wait = async (ms: number) => {
+    return new Promise(resolve => {
+      setTimeout(resolve, ms);
+    });
+  };
 
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    try {
+      const response = await fetch(`http://${localIp}:3000/api/data`);
+      const data = await response.json();
+      await wait(500);
+      setData(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  useEffect(() => {
     const fetchPosts = async () => {
       try {
         const response = await fetch(`http://${localIp}:3000/api/data`);
@@ -133,6 +148,8 @@ const Networking = () => {
           width: '100%',
           padding: 10,
         }}
+        refreshing={isRefreshing}
+        onRefresh={async () => await handleRefresh()}
         data={data}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
