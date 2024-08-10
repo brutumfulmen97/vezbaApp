@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useLayoutEffect} from 'react';
 import {StyleSheet, SafeAreaView, Platform, FlatList} from 'react-native';
 import PokemonCard from './PokemonCard';
+import {useNavigation} from '@react-navigation/native';
 
 const PokeApp = () => {
   const charmanderData = {
@@ -40,6 +41,14 @@ const PokeApp = () => {
   };
 
   const pokemons = [charmanderData, squirtleData, bulbasaurData, pikachuData];
+
+  const navigation = useNavigation();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: 'POKEMONOVI',
+    });
+  }, [navigation]);
 
   return (
     <SafeAreaView style={styles.container}>

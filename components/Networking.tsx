@@ -25,9 +25,13 @@ type TFormData = {
   content: string;
 };
 
-const Networking = () => {
+const Networking = ({navigation, route}: any) => {
+  console.log(navigation.getState());
+  console.log(route.params.name);
+
   const [data, setData] = useState<TPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isPosting, setIsPosting] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState<TFormData>({
@@ -56,6 +60,7 @@ const Networking = () => {
 
   const handleSubmit = async () => {
     if (validateForm()) {
+      setIsPosting(true);
       try {
         const response = await fetch(`http://${localIp}:3000/api/data`, {
           method: 'POST',
@@ -65,8 +70,9 @@ const Networking = () => {
           body: JSON.stringify(formData),
         });
         const data = await response.json();
+        await wait(500);
 
-        setData(prev => [...prev, data.data]);
+        setData(prev => [data.data, ...prev]);
 
         console.log(data);
 
@@ -77,6 +83,8 @@ const Networking = () => {
         setErrors({title: '', content: ''});
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsPosting(false);
       }
     }
   };
@@ -107,7 +115,7 @@ const Networking = () => {
         const response = await fetch(`http://${localIp}:3000/api/data`);
         const data = await response.json();
         await wait(500);
-        setData(data);
+        setData(data.reverse());
       } catch (error) {
         console.log(error);
       } finally {
@@ -217,6 +225,7 @@ const Networking = () => {
                 borderRadius: 10,
                 margin: 10,
               }}
+              disabled={isPosting}
               onPress={async () => await handleSubmit()}>
               <Text
                 style={{
@@ -225,7 +234,7 @@ const Networking = () => {
                   fontWeight: 'bold',
                   textTransform: 'uppercase',
                 }}>
-                Add post
+                {isPosting ? 'Posting...' : 'Add post'}
               </Text>
             </Pressable>
           </View>

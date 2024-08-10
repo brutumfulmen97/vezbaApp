@@ -76,13 +76,25 @@ function Bzvz({navigation}: {navigation: any}): React.JSX.Element {
         <Button title="Safe" onPress={() => navigation.navigate('Safe')} />
         <Button
           title="Networking"
-          onPress={() => navigation.navigate('Networking')}
+          onPress={() =>
+            navigation.navigate('Networking', {
+              name: 'Vlatko',
+              age: 27,
+            })
+          }
         />
         <Button
           title="PokeApp"
           onPress={() => navigation.navigate('PokeApp')}
         />
-        <Button title="Form" onPress={() => navigation.navigate('Form')} />
+        <Button
+          title="Form"
+          onPress={() =>
+            navigation.navigate('Form', {
+              title: 'Ovo je forma bato moi',
+            })
+          }
+        />
         <Button title="Login" onPress={() => navigation.navigate('Login')} />
         <Button
           title="Layouts"

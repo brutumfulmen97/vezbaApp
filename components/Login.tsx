@@ -15,9 +15,9 @@ type TError = {
   password: string | null;
 };
 
-const Login = () => {
+const Login = ({route}: any) => {
   const [formData, setFormData] = useState({
-    email: '',
+    email: `${route.params.name}@mail.com`,
     password: '',
   });
   const [errors, setErrors] = useState<TError>({
