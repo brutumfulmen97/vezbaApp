@@ -8,6 +8,7 @@ import {
   Button,
   Platform,
 } from 'react-native';
+import {storage} from '../storage';
 
 type TError = {
   [key: string]: string | null;
@@ -17,7 +18,7 @@ type TError = {
 
 const Login = ({route}: any) => {
   const [formData, setFormData] = useState({
-    email: `${route.params.name}@mail.com`,
+    email: `${route?.params?.name ?? 'lesi'}@mail.com`,
     password: '',
   });
   const [errors, setErrors] = useState<TError>({
@@ -59,6 +60,8 @@ const Login = ({route}: any) => {
     }
   };
 
+  const val = storage.getString('key');
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -87,7 +90,7 @@ const Login = ({route}: any) => {
           <Text style={styles.errorText}>{errors.password}</Text>
         )}
         <View style={{marginTop: 20}}>
-          <Button title="Login" onPress={() => handleSubmit()} />
+          <Button title={`${val} Login`} onPress={() => handleSubmit()} />
         </View>
       </View>
     </KeyboardAvoidingView>
